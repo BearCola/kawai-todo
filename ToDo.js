@@ -31,7 +31,18 @@ export default class ToDo extends Component {
             />
           </TouchableOpacity>
           {isEditing ? (
-            <TextInput value={toDoValue} />
+            <TextInput
+              style={[
+                styles.text, 
+                styles.input,
+                isCompleted ? styles.completedText : styles.uncompletedText 
+              ]}
+              value={toDoValue}
+              multiline={true}
+              onChangeText={this._controllInput}
+              returnKeyType={"done"}
+              onBlur={this._finishEditing}
+            />
           ) : (
             <Text
               style={[
@@ -87,6 +98,9 @@ export default class ToDo extends Component {
       isEditing: false
     });
   };
+  _controllInput = text => {
+    this.setState({ toDoValue: text });
+  };
 }
 
 const styles = StyleSheet.create({
@@ -135,5 +149,10 @@ const styles = StyleSheet.create({
   actionContainer: {
     marginVertical: 10,
     marginHorizontal: 10
+  },
+  input: {
+    marginVertical: 15,
+    width: width / 2,
+    paddingBottom: 5
   }
 });
